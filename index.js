@@ -24,19 +24,12 @@ function myMap(collection, callback) {
     return newArray;
 }
 
-function myReduce(collection, callback, acc) {
-    
-    let copy = [...collection] //make a copy of collection so we can modify
-    console.log('acc: ', acc);
-    console.log('collection: ', copy);
-    
-    acc = acc || copy.shift(); //accumulator either equal the given acc, or || 
-    console.log('acc: ', acc);
-    console.log('collection: ', copy);
+function myReduce(collection, callback, acc = 0) {
+    let objVals = myValues(collection) //convert object values to an array if they exist
+    let copy = [...objVals] //make a copy of our array collection so we can modify
+    acc = acc || copy.shift(); //accumulator is equal to the given acc, or || chop-off the first value and make that the acc  
     for(let num in copy) {
-        acc = callback(acc, copy[num], copy)
-        console.log('acc: ', acc);
-        console.log('collection: ', copy);
+        acc = callback(acc, copy[num], copy) //acc is the result of the predefined callback(acc, val, collection)
     }
     return acc;
 }
